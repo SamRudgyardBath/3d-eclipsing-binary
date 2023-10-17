@@ -9,7 +9,6 @@ Created on Wed Oct 11 09:21:48 2023
 import numpy as np
 import matplotlib.pyplot as plt
 from geometric_functions import RotateY, RotateY
-from node import Node
 from star import Star
 
 def Main():
