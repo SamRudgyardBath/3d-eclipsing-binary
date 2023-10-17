@@ -10,23 +10,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 from geometric_functions import RotateY, RotateY
 from node import Node
+from star import Star
 
 def Main():
     samples = 20
-    
-    i = np.arange(0, samples, 1)
-    y = 1 - (i / float(samples - 1)) * 2  # y goes from 1 to -1
-    radius = np.sqrt(1 - y * y)  # radius at y
-    phi = np.linspace(0, np.pi, samples)
-    theta = np.linspace(0, 2*np.pi, samples)
-    
-    phi, theta = np.meshgrid(phi, theta)
-    
-    # Rotate so the pole of the sphere is along the x-axis
-    z = np.sin(phi) * np.cos(theta)
-    y = np.sin(phi) * np.sin(theta)
-    x = np.cos(phi)
-    
+    star1 = Star(0, 2, samples)
+    x, y, z = star1.nodes
     ax = plt.figure().add_subplot(projection='3d')
     ax.scatter(x, y, z)
     ax.axis('equal')
