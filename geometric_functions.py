@@ -14,14 +14,14 @@ import numpy as np
 import math
 
 def RotateY(theAngle, theVector):
-	rotateBy = np.matrix([[math.cos(theAngle), 0, math.sin(theAngle)],
+	rotateBy = np.array([[math.cos(theAngle), 0, math.sin(theAngle)],
 				[0, 1, 0], 
 				[-math.sin(theAngle), 0, math.cos(theAngle)]])
 	result = np.matmul(theVector, rotateBy)
 	return result
 
 def RotateX(theAngle, theVector):
-	rotateBy = np.matrix([[1, 0, 0],
+	rotateBy = np.array([[1, 0, 0],
 				[0, math.cos(theAngle), -math.sin(theAngle)], 
 				[0, math.sin(theAngle), math.cos(theAngle)]])
 	result = np.matmul(theVector, rotateBy)
