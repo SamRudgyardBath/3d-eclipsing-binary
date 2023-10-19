@@ -66,7 +66,6 @@ def OnKeyPressed(event):
                 newVector = RotateY(angle, currentVector)
                 star.nodes[i] = Node(newVector[0], newVector[1], newVector[2])
             star.position = RotateY(angle, star.position)
-            print(star.position)
         if movementStopped:
             movementStarted, movementStopped = False, False
     PlotStars(listStars)
