@@ -7,7 +7,6 @@ Created on Wed Oct 11 09:21:48 2023
 """
 
 import numpy as np
-from matplotlib.backend_bases import MouseButton
 import matplotlib.pyplot as plt
 from geometric_functions import RotateX, RotateY
 from star import Star
