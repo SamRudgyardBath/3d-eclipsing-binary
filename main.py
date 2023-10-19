@@ -27,11 +27,7 @@ for i in range(0, 1):
     ax.axis('equal')
     ax.set_xlabel('x')
     ax.set_ylabel('y')
-    zMin, zMax = z.min(), z.max()
-    alphas = []
-    for i in range(0, len(z)):
-        alphas.append(np.interp(z[i], [zMin, zMax], [0,1]))
-    alphas = np.interp(z, [zMin, zMax], [0,1])
+    alphas = np.interp(z, [z.min(), z.max()], [0,1])
     ax.scatter(x-position[0], y-position[1], alpha=alphas, linewidth=0.2, ls='', antialiased=True)
     
 def OnMouseMove(event):
@@ -69,11 +65,7 @@ def OnMouseMove(event):
     x, y, z = star1.GetAllCoords()
     position = star1.position
     ax.cla()
-    zMin, zMax = z.min(), z.max()
-    alphas = []
-    for i in range(0, len(z)):
-        alphas.append(np.interp(z[i], [zMin, zMax], [0,1]))
-    alphas = np.interp(z, [zMin, zMax], [0,1])
+    alphas = np.interp(z, [z.min(), z.max()], [0,1])
     ax.scatter(x-position[0], y-position[1], alpha=alphas, linewidth=0.2, ls='', antialiased=True)
     plt.draw()
     
