@@ -7,7 +7,7 @@ Created on Wed Oct 11 09:21:48 2023
 """
 
 import numpy as np
-from matplotlib.backend_bases import MouseEvent
+from matplotlib.backend_bases import MouseButton
 import matplotlib.pyplot as plt
 from geometric_functions import RotateX, RotateY
 from star import Star
@@ -18,6 +18,8 @@ ax.axis('equal')
 ax.set_xlabel('x')
 ax.set_ylabel('y')
 movementStarted, movementStopped = False, False
+arrowKeys = ["up", "down", "left", "right"]
+dx, dy = 0, 0
 
 def PlotStars(theListStars):
     ax.cla()
@@ -34,45 +36,50 @@ star2 = Star(np.array([10,0,0]), 5, samples)
 listStars = [star1, star2]
 PlotStars(listStars)
 
-def OnMouseMove(event):
-    global movementStarted, star1, movementStopped
-    if event.inaxes:
-        if movementStarted:
-            tempPos = [event.xdata, event.ydata]
-            dx = tempPos[0] - cursorInitPos[0]
-            dy = tempPos[1] - cursorInitPos[1]
-            angle = np.pi * (dy / fig.get_figheight())
-            # TODO: Rotate all points using RotateX
-            for star in listStars:
-                for i in range(0,len(star.nodes)):
-                    node = star.nodes[i]
-                    pos = star.position
-                    currentVector = np.array([node.x - pos[0], node.y - pos[1], node.z - pos[2]])
-                    newVector = RotateX(angle, currentVector)
-                    star.nodes[i] = Node(newVector[0], newVector[1], newVector[2])
-                # TODO: Rotate all points using RotateY
-                angle = np.pi * (dx / fig.get_figwidth())
-                for i in range(0,len(star.nodes)):
-                    node = star.nodes[i]
-                    pos = star.position
-                    currentVector = np.array([node.x - pos[0], node.y - pos[1], node.z - pos[2]])
-                    newVector = RotateY(angle, currentVector)
-                    star.nodes[i] = Node(newVector[0], newVector[1], newVector[2])
-            if movementStopped:
-                movementStarted, movementStopped = False, False
+def OnKeyPressed(event):
+    global movementStarted, movementStopped, dx, dy
+    if event.key in arrowKeys:
+        movementStarted = True
+        if (event.key == "left"):
+            dx += 1 / 40
+        if (event.key == "right"):
+            dx += -1 / 40
+        if (event.key == "up"):
+            dy += 1 / 40
+        if (event.key == "down"):
+            dy += -1 / 40
+        for star in listStars:
+            angle = np.pi * (dy)
+            # print(angle)
+            # TODO: NEED TO UPDATE STAR.POSITION TOO!
+            for i in range(0,len(star.nodes)):
+                node = star.nodes[i]
+                currentVector = np.array([node.x, node.y, node.z])
+                newVector = RotateX(angle, currentVector)
+                star.nodes[i] = Node(newVector[0], newVector[1], newVector[2])
+            star.position = RotateX(angle, star.position)
+            # TODO: Rotate all points using RotateY
+            angle = np.pi * (dx)
+            # print(angle)
+            for i in range(0,len(star.nodes)):
+                node = star.nodes[i]
+                currentVector = np.array([node.x, node.y, node.z])
+                newVector = RotateY(angle, currentVector)
+                star.nodes[i] = Node(newVector[0], newVector[1], newVector[2])
+            star.position = RotateY(angle, star.position)
+            print(star.position)
+        if movementStopped:
+            movementStarted, movementStopped = False, False
     PlotStars(listStars)
-
-def OnButtonPressed(event):
-    global movementStarted
-    global cursorInitPos
-    if event.button == 1 and not movementStarted:
-        movementStarted, cursorInitPos = True, [event.xdata, event.ydata]
+                
+            
         
-def OnButtonReleased(event):
+def OnKeyReleased(event):
+    global dx, dy
     global movementStarted, movementStopped
-    if event.button == 1 and movementStarted:
+    if event.key in arrowKeys and movementStarted:
         movementStopped = True
+        dx, dy = 0, 0
 
-fig.canvas.mpl_connect('motion_notify_event', OnMouseMove)
-fig.canvas.mpl_connect('button_press_event', OnButtonPressed)
-fig.canvas.mpl_connect('button_release_event', OnButtonReleased)
+fig.canvas.mpl_connect('key_press_event', OnKeyPressed)
+fig.canvas.mpl_connect('key_release_event', OnKeyReleased)
