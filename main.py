@@ -24,21 +24,25 @@ star1 = Star(np.array([0,0,0]), 2, samples)
 for i in range(0, 1):
     x, y, z = star1.GetAllCoords()
     position = star1.position
-    # ax.scatter(x-position[0], y-position[1], z-position[2])
     ax.axis('equal')
     ax.set_xlabel('x')
     ax.set_ylabel('y')
-    # ax.set_zlabel('z')
-    # ax.plot_surface(x-position[0], y-position[1], z-position[2], linewidth=0.2, antialiased=True)
-    ax.scatter(x-position[0], y-position[1], linewidth=0.2, ls='', antialiased=True)
+    zMin, zMax = z.min(), z.max()
+    alphas = []
+    for i in range(0, len(z)):
+        alphas.append(np.interp(z[i], [zMin, zMax], [0,1]))
+    alphas = np.interp(z, [zMin, zMax], [0,1])
+    ax.scatter(x-position[0], y-position[1], alpha=alphas, linewidth=0.2, ls='', antialiased=True)
     
 def OnMouseMove(event):
     global movementStarted, star1, movementStopped
     if event.inaxes:
         if movementStarted:
             tempPos = [event.xdata, event.ydata]
-            dx = cursorInitPos[0] - tempPos[0]
-            dy = cursorInitPos[1] - tempPos[1]
+            # dx = cursorInitPos[0] - tempPos[0]
+            dx = tempPos[0] - cursorInitPos[0]
+            # dy = cursorInitPos[1] - tempPos[1]
+            dy = tempPos[1] - cursorInitPos[1]
             angle = np.pi * (dy / fig.get_figheight())
             # TODO: Rotate all points using RotateX
             for i in range(0,len(star1.nodes)):
@@ -64,10 +68,13 @@ def OnMouseMove(event):
                 movementStarted, movementStopped = False, False
     x, y, z = star1.GetAllCoords()
     position = star1.position
-    # ax.scatter(x-position[0], y-position[1], z-position[2])
     ax.cla()
-    ax.scatter(x-position[0], y-position[1], linewidth=0.2, antialiased=True)
-    # plt.clear()
+    zMin, zMax = z.min(), z.max()
+    alphas = []
+    for i in range(0, len(z)):
+        alphas.append(np.interp(z[i], [zMin, zMax], [0,1]))
+    alphas = np.interp(z, [zMin, zMax], [0,1])
+    ax.scatter(x-position[0], y-position[1], alpha=alphas, linewidth=0.2, ls='', antialiased=True)
     plt.draw()
     
 
