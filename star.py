@@ -31,10 +31,6 @@ class Star:
                 nodes.append(newNode)
         self.nodes = np.array(nodes)
     
-    # @property
-    # def nodes(self):
-    #     return self.nodes
-    
     def GetAllNodes(self):
         allNodes = []
         for node in self.nodes:

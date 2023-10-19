@@ -14,7 +14,6 @@ from star import Star
 from node import Node
 
 fig, ax = plt.subplots()
-# ax = plt.figure().add_subplot(projection='3d')
 movementStarted, movementStopped = False, False
 
 samples = 30
@@ -35,9 +34,7 @@ def OnMouseMove(event):
     if event.inaxes:
         if movementStarted:
             tempPos = [event.xdata, event.ydata]
-            # dx = cursorInitPos[0] - tempPos[0]
             dx = tempPos[0] - cursorInitPos[0]
-            # dy = cursorInitPos[1] - tempPos[1]
             dy = tempPos[1] - cursorInitPos[1]
             angle = np.pi * (dy / fig.get_figheight())
             # TODO: Rotate all points using RotateX
@@ -46,10 +43,6 @@ def OnMouseMove(event):
                 currentVector = np.array([node.x, node.y, node.z])
                 newVector = RotateX(angle, currentVector)
                 star1.nodes[i] = Node(newVector[0], newVector[1], newVector[2])
-                # if (node != star1.nodes[i]):
-                    # print("Sucessfully updated!")
-                # print(newVector)
-                # print(newVector)
             # TODO: Rotate all points using RotateY
             angle = np.pi * (dx / fig.get_figwidth())
             for i in range(0,len(star1.nodes)):
@@ -57,9 +50,6 @@ def OnMouseMove(event):
                 currentVector = np.array([node.x, node.y, node.z])
                 newVector = RotateY(angle, currentVector)
                 star1.nodes[i] = Node(newVector[0], newVector[1], newVector[2])
-                # if (node != star1.nodes[i]):
-                    # print("Sucessfully updated!")
-                # print(newVector)
             if movementStopped:
                 movementStarted, movementStopped = False, False
     x, y, z = star1.GetAllCoords()
@@ -84,5 +74,3 @@ def OnButtonReleased(event):
 fig.canvas.mpl_connect('motion_notify_event', OnMouseMove)
 fig.canvas.mpl_connect('button_press_event', OnButtonPressed)
 fig.canvas.mpl_connect('button_release_event', OnButtonReleased)
-
-# plt.show()
