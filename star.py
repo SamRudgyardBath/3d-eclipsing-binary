@@ -15,20 +15,20 @@ class Star:
         self.samples = theSamples
         
         nodes = []
+        theta = np.linspace(0, 2 * np.pi, theSamples)
+        phi = np.linspace(0, np.pi, theSamples)
+        [THETA, PHI] = np.meshgrid(theta, phi)
+        # sphere parametrization
+        Z = self.radius * np.cos(THETA) * np.sin(PHI)
+        Y = self.radius * np.sin(THETA) * np.sin(PHI)
+        X = self.radius * np.cos(PHI)
+        
         for i in range(0, theSamples):
-            y = 1 - (i / float(theSamples - 1)) * 2  # y goes from 1 to -1
-            phi = i * np.pi / theSamples
-            
             for j in range(0, theSamples):
-                theta = 2 * j * np.pi / theSamples
-            
-                # Rotate so the pole of the sphere is along the x-axis
-                z = self.radius * np.sin(phi) * np.cos(theta)
-                y = self.radius * np.sin(phi) * np.sin(theta)
-                x = self.radius * np.cos(phi)
-            
-                newNode = Node(x, y, z)
-                nodes.append(newNode)
+                xVal = X[i, j]
+                yVal = Y[i, j]
+                zVal = Z[i, j]
+                nodes.append(Node(xVal, yVal, zVal))
         self.nodes = np.array(nodes)
     
     def GetAllNodes(self):
@@ -47,3 +47,4 @@ class Star:
         yArray = np.array(yList)
         zArray = np.array(zList)
         return xArray, yArray, zArray
+    
