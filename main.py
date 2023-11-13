@@ -29,7 +29,7 @@ def PlotStars(theListStars):
         ax.scatter(x-position[0], y-position[1], alpha=alphas, linewidth=0.2, ls='', antialiased=True)
     plt.draw()
 
-samples = 30
+samples = 10
 star1 = Star(np.array([0,0,0]), 2, samples)
 star2 = Star(np.array([10,0,0]), 5, samples)
 listStars = [star1, star2]
@@ -69,8 +69,6 @@ def OnKeyPressed(event):
         if movementStopped:
             movementStarted, movementStopped = False, False
     PlotStars(listStars)
-                
-            
         
 def OnKeyReleased(event):
     global dx, dy
