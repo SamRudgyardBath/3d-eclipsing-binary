@@ -37,9 +37,10 @@ def PlotStars(theListStars):
                 zLab = np.delete(zLab, i)
                 alphas = np.delete(alphas, i)
         
+        grid = tri.Triangulation(xLab, yLab)
         # Scatter data points
         ax.scatter(xLab, yLab, alpha=alphas, linewidth=0.2, ls='', antialiased=True)
-        ax.triplot(xLab, yLab)
+        ax.triplot(grid)
         # ax.tripcolor(xLab, yLab, alphas)
     plt.draw()
 
