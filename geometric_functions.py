@@ -11,18 +11,17 @@ Geometric functions for node manipulation.
 """
 
 import numpy as np
-import math
 
 def RotateY(theAngle, theVector):
-	rotateBy = np.array([[math.cos(theAngle), 0, math.sin(theAngle)],
+	rotateBy = np.array([[np.cos(theAngle), 0, np.sin(theAngle)],
 				[0, 1, 0], 
-				[-math.sin(theAngle), 0, math.cos(theAngle)]])
+				[-np.sin(theAngle), 0, np.cos(theAngle)]])
 	result = np.matmul(theVector, rotateBy)
 	return result
 
 def RotateX(theAngle, theVector):
 	rotateBy = np.array([[1, 0, 0],
-				[0, math.cos(theAngle), -math.sin(theAngle)], 
-				[0, math.sin(theAngle), math.cos(theAngle)]])
+				[0, np.cos(theAngle), -np.sin(theAngle)], 
+				[0, np.sin(theAngle), np.cos(theAngle)]])
 	result = np.matmul(theVector, rotateBy)
 	return result
