@@ -49,17 +49,13 @@ def OnKeyPressed(event):
             dy += -1 / 40
         for star in listStars:
             angle = np.pi * (dy)
-            # print(angle)
-            # TODO: NEED TO UPDATE STAR.POSITION TOO!
             for i in range(0,len(star.nodes)):
                 node = star.nodes[i]
                 currentVector = np.array([node.x, node.y, node.z])
                 newVector = RotateX(angle, currentVector)
                 star.nodes[i] = Node(newVector[0], newVector[1], newVector[2])
             star.position = RotateX(angle, star.position)
-            # TODO: Rotate all points using RotateY
             angle = np.pi * (dx)
-            # print(angle)
             for i in range(0,len(star.nodes)):
                 node = star.nodes[i]
                 currentVector = np.array([node.x, node.y, node.z])
