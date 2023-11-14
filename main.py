@@ -10,6 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.tri as tri
 from geometric_functions import RotateX, RotateY
+from luminosity_functions import GetLuminosityOfGrid
 from star import Star
 from node import Node
 
@@ -38,6 +39,7 @@ def PlotStars(theListStars):
                 alphas = np.delete(alphas, i)
         
         grid = tri.Triangulation(xLab, yLab)
+        print(f"Total Luminosity: {GetLuminosityOfGrid(grid)}")
         # Scatter data points
         ax.scatter(xLab, yLab, alpha=alphas, linewidth=0.2, ls='', antialiased=True)
         ax.triplot(grid)
