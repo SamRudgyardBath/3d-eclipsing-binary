@@ -15,21 +15,17 @@ class Star:
         self.samples = theSamples
         
         nodes = []
-        theta = np.linspace(0, 2 * np.pi, theSamples)
-        phi = np.linspace(0, np.pi, theSamples)
-        [THETA, PHI] = np.meshgrid(theta, phi)
-        
-        # sphere parametrization
-        Z = self.radius * np.cos(THETA) * np.sin(PHI)
-        Y = self.radius * np.sin(THETA) * np.sin(PHI)
-        X = self.radius * np.cos(PHI)
-        
-        for i in range(0, theSamples):
-            for j in range(0, theSamples):
-                xVal = X[i, j]
-                yVal = Y[i, j]
-                zVal = Z[i, j]
-                nodes.append(Node(xVal, yVal, zVal))
+        goldenRatio = np.pi * (np.sqrt(5) - 1) # Golden Ratio in radians
+        for i in range(theSamples):
+            y = 1 - (i / float(theSamples - 1)) * 2  # y goes from 1 to -1
+            radius = np.sqrt(1 - y * y)  # radius at y
+    
+            theta = goldenRatio * i  # golden angle increment
+    
+            x = np.cos(theta) * radius
+            z = np.sin(theta) * radius
+            
+            nodes.append(Node(self.radius * x, self.radius * y, self.radius * z))
         self.nodes = np.array(nodes)
     
     def GetAllNodes(self):
