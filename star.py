@@ -18,6 +18,7 @@ class Star:
         theta = np.linspace(0, 2 * np.pi, theSamples)
         phi = np.linspace(0, np.pi, theSamples)
         [THETA, PHI] = np.meshgrid(theta, phi)
+        
         # sphere parametrization
         Z = self.radius * np.cos(THETA) * np.sin(PHI)
         Y = self.radius * np.sin(THETA) * np.sin(PHI)
@@ -47,4 +48,3 @@ class Star:
         yArray = np.array(yList)
         zArray = np.array(zList)
         return xArray, yArray, zArray
-    
