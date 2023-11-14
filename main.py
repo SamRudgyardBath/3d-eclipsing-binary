@@ -27,6 +27,15 @@ def PlotStars(theListStars):
         position = star.position
         alphas = np.interp(z, [z.min(), z.max()], [0,1])
         xLab, yLab, zLab = x + position[0], y + position[1], z + position[2]
+        
+        for z in zLab:
+            if (z < position[2]):
+                i = zLab.tolist().index(z)
+                xLab = np.delete(xLab, i)
+                yLab = np.delete(yLab, i)
+                zLab = np.delete(zLab, i)
+                alphas = np.delete(alphas, i)
+        
         ax.scatter(xLab, yLab, alpha=alphas, linewidth=0.2, ls='', antialiased=True)
     plt.draw()
 
