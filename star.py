@@ -9,15 +9,16 @@ import numpy as np
 from node import Node
 
 class Star:
-    def __init__(self, thePos, theRadius, theSamples):
+    def __init__(self, thePos, theRadius, theResolution):
         self.position = thePos
         self.radius = theRadius
-        self.samples = theSamples
+        
+        self.samples = int((4 * np.pi * self.radius**2) * theResolution / 100)
         
         nodes = []
         goldenRatio = np.pi * (np.sqrt(5) - 1) # Golden Ratio in radians
-        for i in range(theSamples):
-            y = 1 - (i / float(theSamples - 1)) * 2  # y goes from 1 to -1
+        for i in range(self.samples):
+            y = 1 - (i / float(self.samples - 1)) * 2  # y goes from 1 to -1
             radius = np.sqrt(1 - y * y)  # radius at y
     
             theta = goldenRatio * i  # golden angle increment

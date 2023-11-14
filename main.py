@@ -43,9 +43,9 @@ def PlotStars(theListStars):
         # ax.tripcolor(xLab, yLab, alphas)
     plt.draw()
 
-samples = 10
-star1 = Star(np.array([0,0,0]), 2, samples)
-star2 = Star(np.array([10,0,0]), 5, samples)
+resolution = 200
+star1 = Star(np.array([0,0,0]), 2, resolution)
+star2 = Star(np.array([10,0,0]), 5, resolution)
 listStars = [star1, star2]
 PlotStars(listStars)
 
