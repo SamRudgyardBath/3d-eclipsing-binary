@@ -8,6 +8,7 @@ Created on Wed Oct 11 09:21:48 2023
 
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.tri as tri
 from geometric_functions import RotateX, RotateY
 from star import Star
 from node import Node
@@ -36,7 +37,9 @@ def PlotStars(theListStars):
                 zLab = np.delete(zLab, i)
                 alphas = np.delete(alphas, i)
         
+        # Scatter data points
         ax.scatter(xLab, yLab, alpha=alphas, linewidth=0.2, ls='', antialiased=True)
+        ax.triplot(xLab, yLab)
     plt.draw()
 
 samples = 10
