@@ -26,7 +26,8 @@ def PlotStars(theListStars):
         x, y, z = star.GetAllCoords()
         position = star.position
         alphas = np.interp(z, [z.min(), z.max()], [0,1])
-        ax.scatter(x-position[0], y-position[1], alpha=alphas, linewidth=0.2, ls='', antialiased=True)
+        xLab, yLab, zLab = x + position[0], y + position[1], z + position[2]
+        ax.scatter(xLab, yLab, alpha=alphas, linewidth=0.2, ls='', antialiased=True)
     plt.draw()
 
 samples = 10
