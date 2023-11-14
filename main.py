@@ -40,6 +40,7 @@ def PlotStars(theListStars):
         # Scatter data points
         ax.scatter(xLab, yLab, alpha=alphas, linewidth=0.2, ls='', antialiased=True)
         ax.triplot(xLab, yLab)
+        # ax.tripcolor(xLab, yLab, alphas)
     plt.draw()
 
 samples = 10
