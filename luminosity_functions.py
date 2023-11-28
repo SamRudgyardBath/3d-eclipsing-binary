@@ -36,3 +36,28 @@ def GetLuminosityOfGrid(grid):
         area = 0.5 * (x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2))
         totalArea += area
     return totalArea
+
+def GetLuminosity(frontStar, backStar):
+    frontStarNodes, backStarNodes = GetVisibleNodes(frontStar, backStar)
+    luminosity = 0
+    for node in frontStarNodes:
+        surfaceAreaPerNode = 4 * np.pi * frontStar.radius**2 / len(frontStar.nodes)  
+        luminosity += surfaceAreaPerNode * frontStar.temperature ** 4
+    for node in backStarNodes:
+        surfaceAreaPerNode = 4 * np.pi * backStar.radius**2 / len(backStar.nodes)  
+        luminosity += surfaceAreaPerNode * backStar.temperature ** 4
+    return luminosity
+
+def GetVisibleNodes(frontStar, backStar):
+    frontStarVisibleNodes = []
+    backStarVisibleNodes = []
+    for node in frontStar.nodes:
+        if (node.z >= 0):
+            frontStarVisibleNodes.append(node)
+    for node in backStar.nodes:
+        labX = node.x + backStar.position[0]
+        labY = node.y + backStar.position[1]
+        if (node.z >= 0) and (np.hypot(abs(labX - frontStar.position[0]), abs(labY - frontStar.position[1])) >= frontStar.radius):
+            backStarVisibleNodes.append(node) 
+    return frontStarVisibleNodes, backStarVisibleNodes
+        

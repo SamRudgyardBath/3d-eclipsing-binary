@@ -9,7 +9,7 @@ import numpy as np
 from node import Node
 
 class Star:
-    def __init__(self, pos, radius, res):
+    def __init__(self, pos, radius, temperature, res):
         """ 
         Star class constructor
         
@@ -19,11 +19,14 @@ class Star:
             Position of the star in cartesian coordinates: x, y, z
         radius : float
             Radius of the star
+        temperature : float
+            Constant surface temperature of the star (K)
         res : float
             Resolution, determines the number of nodes that makes up the star
         """
         self.position = pos
         self.radius = radius
+        self.temperature = temperature
         
         samples = int((4 * np.pi * self.radius**2) * res / 100)
         
@@ -52,7 +55,7 @@ class Star:
         """
         allNodes = []
         for node in self.nodes:
-            allNodes.append(np.array([node.x, node.y, node.z]))
+            allNodes.append(node)
         return allNodes
     
     def GetAllCoords(self):
@@ -77,3 +80,12 @@ class Star:
         yArray = np.array(yList)
         zArray = np.array(zList)
         return xArray, yArray, zArray
+    
+    @property
+    def luminosity(self):
+        luminosity = 0
+        surfaceAreaPerNode = 4 * np.pi * self.radius**2 / len(self.nodes)
+        for node in self.nodes:
+            if (node.z >= self.position[2]):
+                luminosity += surfaceAreaPerNode * self.temperature ** 4
+        return luminosity
